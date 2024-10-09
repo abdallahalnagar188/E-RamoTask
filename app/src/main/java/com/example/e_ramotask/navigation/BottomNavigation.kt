@@ -1,7 +1,6 @@
 package com.example.e_ramotask.navigation
 
-import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.displayCutoutPadding
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.BottomNavigation
@@ -20,7 +19,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.e_ramotask.R
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MyBottomNavigation(navController: NavController) {
     val items = listOf(
@@ -30,13 +28,15 @@ fun MyBottomNavigation(navController: NavController) {
         BottomNavItem.Brand,
         BottomNavItem.Settings
     )
+
     BottomNavigation(
         backgroundColor = colorResource(id = R.color.gray),
-        contentColor = Color.Black, modifier = Modifier.padding(bottom = 50.dp
-        ).displayCutoutPadding(),
+        contentColor = Color.Black,
+        modifier = Modifier.height(55.dp) // Removed padding
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
+
         items.forEach { item ->
             BottomNavigationItem(
                 icon = {
@@ -60,7 +60,6 @@ fun MyBottomNavigation(navController: NavController) {
                 selected = currentRoute == item.screen_route,
                 onClick = {
                     navController.navigate(item.screen_route) {
-
                         navController.graph.startDestinationRoute?.let { screen_route ->
                             popUpTo(screen_route) {
                                 navController.popBackStack(
