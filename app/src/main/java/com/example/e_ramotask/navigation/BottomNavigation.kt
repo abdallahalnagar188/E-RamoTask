@@ -32,7 +32,8 @@ fun MyBottomNavigation(navController: NavController) {
     )
     BottomNavigation(
         backgroundColor = colorResource(id = R.color.gray),
-        contentColor = Color.Black, modifier = Modifier.displayCutoutPadding(),
+        contentColor = Color.Black, modifier = Modifier.padding(bottom = 50.dp
+        ).displayCutoutPadding(),
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
