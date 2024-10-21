@@ -3,6 +3,7 @@ package com.example.e_ramotask.navigation
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -32,7 +33,8 @@ fun MyBottomNavigation(navController: NavController) {
     BottomNavigation(
         backgroundColor = colorResource(id = R.color.gray),
         contentColor = Color.Black,
-        modifier = Modifier.height(55.dp) // Removed padding
+        modifier = Modifier.systemBarsPadding()
+            .height(55.dp)
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -41,11 +43,11 @@ fun MyBottomNavigation(navController: NavController) {
             BottomNavigationItem(
                 icon = {
                     Icon(
-                        painterResource(id = item.icon),
+                        painter = painterResource(id = item.icon),
+                        contentDescription = item.title,
                         modifier = Modifier
                             .padding(top = 6.dp)
-                            .size(25.dp),
-                        contentDescription = item.title
+                            .size(25.dp)
                     )
                 },
                 label = {
@@ -55,21 +57,18 @@ fun MyBottomNavigation(navController: NavController) {
                     )
                 },
                 selectedContentColor = colorResource(id = R.color.pink),
-                unselectedContentColor = Color.Gray.copy(0.7f),
+                unselectedContentColor = Color.Gray.copy(alpha = 0.7f),
                 alwaysShowLabel = true,
                 selected = currentRoute == item.screen_route,
                 onClick = {
-                    navController.navigate(item.screen_route) {
-                        navController.graph.startDestinationRoute?.let { screen_route ->
-                            popUpTo(screen_route) {
-                                navController.popBackStack(
-                                    route = "exercises",
-                                    inclusive = false
-                                )
+                    if (currentRoute != item.screen_route) {
+                        navController.navigate(item.screen_route) {
+                            popUpTo(navController.graph.startDestinationRoute ?: "home") {
+                                saveState = true
                             }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
                 }
             )

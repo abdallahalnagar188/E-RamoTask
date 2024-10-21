@@ -38,7 +38,7 @@ fun HomeScreen(navController: NavHostController) {
         FloatingActionButton(
             onClick = { /*TODO*/ },
             modifier = Modifier.align(Alignment.BottomEnd).displayCutoutPadding()
-                .padding(bottom = 70.dp, end = 30.dp)
+                .padding(bottom = 120.dp, end = 30.dp)
             ,
             backgroundColor = colorResource(id = R.color.yellow),
             contentColor = colorResource(id = R.color.white)
